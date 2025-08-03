@@ -1,0 +1,12 @@
+[project]
+name = "vanta"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "minecraft-launcher-lib>=7.1",
+    "packaging>=25.0",
+    "platformdirs>=4.3.8",
+    "typer>=0.16.0",
+]
