@@ -1,7 +1,7 @@
-from types import FunctionType
+from minecraft_launcher_lib.types import CallbackDict
 
 
-def make_callbacks() -> dict[str, FunctionType]:
+def make_callbacks() -> CallbackDict:
     progress: dict[str, float | str] = {"current": 0.0, "max": 1.0, "status": ""}
 
     def set_status(x: str):

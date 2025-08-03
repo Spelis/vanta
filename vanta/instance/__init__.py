@@ -9,6 +9,7 @@ from types import SimpleNamespace
 import minecraft_launcher_lib as mll
 import requests
 import typer
+from minecraft_launcher_lib.types import MinecraftOptions
 
 from vanta.instance import loaders, modrinth, util
 from vanta.mll_callbacks import make_callbacks
@@ -30,12 +31,10 @@ def get_all_versions():
 
 def new(name: str, id: str, version: str) -> bool:
     """[LIB] Create a new Instance"""
-    callback = make_callbacks()
     mll.install.install_minecraft_version(
-        version, util.vanta_instance_dir / id / ".minecraft", callback
+        version, str(util.vanta_instance_dir / id / ".minecraft"), make_callbacks()
     )
-    sys.stdout.write(f"\r\x1b[2KInstalled {version}!\n")
-    sys.stdout.flush()
+    print(f"\r\x1b[2KInstalled {version}!\n", end="", flush=True)
     info = {
         "name": name,
         "version": version,
@@ -55,7 +54,7 @@ def launch(
     identifier: str,
     user: str,
     instance_dir: Path,
-    accounts: dict,
+    accounts: dict[str, dict[str, str]],
 ) -> None:
     """
     [LIB] Launches the specified instance
@@ -79,16 +78,14 @@ def launch(
     if login_data is None:
         raise ValueError(f"User '{user}' not logged in")
 
-    opts = {
+    opts: MinecraftOptions = {
         "username": login_data["name"],
         "uuid": login_data["id"],
         "token": login_data["access_token"],
     }
     cmd = mll.command.get_minecraft_command(version, mcdir, opts)
-    print(
-        "The game is launching, but all console output will be hidden and put in the minecraft logs instead."
-    )
-    subprocess.run(cmd, cwd=mcdir, check=True, stdout=subprocess.DEVNULL)
+    print("The game is launching, only Warnings and Errors will be printed.")
+    _ = subprocess.run(cmd, cwd=mcdir, check=True, stdout=subprocess.DEVNULL)
 
 
 @instance_group.callback(invoke_without_command=False)

@@ -1,5 +1,4 @@
 from pathlib import Path
-from types import SimpleNamespace
 
 import minecraft_launcher_lib as mll
 import typer
@@ -45,10 +44,11 @@ def _loader_install(
         inst_info["loaderName"] = "forge"
         save_instance_info(instance, inst_info)
     if loader == "quilt":
-        mll.quilt.install_quilt(inst_info["version"], inst_dir, callbacks)
-        print(
-            "quilt does not get automatically installed into the instance data (yet), developer is lazy :("
-        )
+        version: str = str(mll.quilt.get_latest_loader_version())
+        mll.quilt.install_quilt(inst_info["version"], inst_dir, version, callbacks)
+        inst_info["jarVersion"] = f"quilt-loader-{version}-{inst_info['version']}"
+        inst_info["loaderName"] = "quilt"
+        save_instance_info(instance, inst_info)
 
     (inst_dir / "mods").mkdir(
         exist_ok=True
