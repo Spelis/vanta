@@ -8,6 +8,7 @@ from pathlib import Path
 import minecraft_launcher_lib as mll
 import platformdirs
 import typer
+from dotenv import load_dotenv
 
 vanta_data_path = platformdirs.user_data_path("vanta", "spelis")
 if not vanta_data_path.exists():
@@ -15,6 +16,8 @@ if not vanta_data_path.exists():
     Path.mkdir(vanta_data_path)
 
 user_group = typer.Typer(help="User Control")
+
+load_dotenv()
 
 MSA_CLIENT_ID = os.environ.get("MSA_CLIENT_ID", None)
 MSA_REDIRECT_URL = os.environ.get("MSA_REDIRECT_URL", None)

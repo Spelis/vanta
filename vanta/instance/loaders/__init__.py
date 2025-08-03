@@ -49,3 +49,7 @@ def _loader_install(
         print(
             "quilt does not get automatically installed into the instance data (yet), developer is lazy :("
         )
+
+    (inst_dir / "mods").mkdir(
+        exist_ok=True
+    )  # make sure the mods directory exists after installing a loader.
