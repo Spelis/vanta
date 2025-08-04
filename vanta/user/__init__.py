@@ -59,9 +59,24 @@ def save_accounts(accounts):
     DATA_FILE.write_text(json.dumps(accounts, indent=2))
 
 
-def login() -> bool:
+def login(cracked_username: str = "") -> bool:
     """[LIB] Log in a user."""
-    entry = prompt_auth()
+    if not cracked_username:
+        entry = prompt_auth()
+    else:
+        print(
+            """\x1b[31m⚠️ Important Notice ⚠️
+This launcher allows offline (cracked) play.
+Please be aware that using cracked accounts may be illegal
+in your country and is not supported by Mojang or Microsoft.  
+We recommend purchasing Minecraft at https://www.minecraft.net 
+to support the developers and ensure full access to the game.\x1b[0m"""
+        )
+        entry = {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "name": cracked_username,
+            "cracked": True,
+        }
     accounts = load_accounts()
     accounts[entry["name"]] = entry
     save_accounts(accounts)
@@ -87,9 +102,9 @@ def list() -> dict[str, str]:
 
 
 @user_group.command("login")
-def _user_login():
+def _user_login(crack_username: str = ""):
     """Log-in a user"""
-    if login():
+    if login(crack_username):
         print("Success!")
 
 
