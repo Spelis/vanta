@@ -82,10 +82,12 @@ Contributions are welcome! (I'm begging of you to contribute)
 
 If you'd like to help, feel free to open an issue, submit a PR, or suggest new features.
 
+Make sure you read the [contribution](CONTRIBUTING.md) file if you wanna write code.
+
 ## License
 
 This project is licensed under the **MIT License**.
 
 It is a permissive license used in lots of Free and Open Source software.
 
-See the LICENSE file for details.
+See the [LICENSE](LICENSE) file for details.
