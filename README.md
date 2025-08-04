@@ -72,7 +72,7 @@ Now, when you launch the game (see previous instruction) you will load into the 
 ## Roadmap
 
 * [ ] Support for additional modloaders
-* [ ] Cracked account support
+* [*] Cracked account support
 * [ ] Skin management
 * [ ] Custom launch options
 
