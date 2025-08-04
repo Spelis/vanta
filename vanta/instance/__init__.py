@@ -81,8 +81,9 @@ def launch(
     opts: MinecraftOptions = {
         "username": login_data["name"],
         "uuid": login_data["id"],
-        "token": login_data["access_token"],
     }
+    if not "cracked" in login_data.keys():
+        opts["token"] = login_data["access_token"]
     cmd = mll.command.get_minecraft_command(version, mcdir, opts)
     print("The game is launching, only Warnings and Errors will be printed.")
     _ = subprocess.run(cmd, cwd=mcdir, check=True, stdout=subprocess.DEVNULL)
