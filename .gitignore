@@ -11,3 +11,8 @@ wheels/
 .env
 
 uv.lock
+
+
+# Added by cargo
+
+/target
