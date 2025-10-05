@@ -1,5 +1,3 @@
-use std::path::PathBuf;
-
 use crate::helpers::{self, get_instance_folder};
 
 mod lc_helpers;
@@ -35,4 +33,19 @@ pub fn launch(id: String, uid: String) {
 	// yeah dude fuck launching the game i can't do this shit
 
 	dbg!(command);
+}
+
+pub fn list_instances(stdout: bool) -> Vec<String> {
+	let inst_dir = get_instance_folder("");
+	let mut result: Vec<String> = vec![];
+	for inst in inst_dir.read_dir().expect("read_dir call failed") {
+		if let Ok(inst) = inst {
+			let filename = inst.file_name().to_str().unwrap().to_string();
+			if stdout {
+				println!("{}", filename);
+			}
+			result.push(filename);
+		}
+	}
+	return result;
 }

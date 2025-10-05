@@ -4,7 +4,7 @@ use std::{
 	path::{Path, PathBuf},
 };
 
-use crate::ms_auth::User;
+use crate::authentication::User;
 
 pub const USER_FILE: &str = "accounts.json";
 
