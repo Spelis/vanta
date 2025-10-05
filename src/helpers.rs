@@ -4,12 +4,12 @@ use std::{
 	path::{Path, PathBuf},
 };
 
-use crate::ms_auth::types::{self};
+use crate::ms_auth::User;
 
 pub const USER_FILE: &str = "accounts.json";
 
 /// Write to the account file.
-pub fn write_users(users: Vec<types::User>) -> Result<(), std::io::Error> {
+pub fn write_users(users: Vec<User>) -> Result<(), std::io::Error> {
 	let json = serde_json::to_string_pretty(&users)?;
 	let mut file = File::create(get_data_folder(Some(USER_FILE)))?;
 	file.write_all(json.as_bytes())?;
@@ -28,12 +28,8 @@ pub fn write_bytes(filename: String, data: &[u8]) -> Result<(), Box<dyn std::err
 	Ok(())
 }
 
-pub fn read_bytes(filename: String) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
-	Ok(std::fs::read(filename)?)
-}
-
 /// Read the account file.
-pub fn read_users() -> Vec<types::User> {
+pub fn read_users() -> Vec<User> {
 	match File::open(get_data_folder(Some(USER_FILE))) {
 		Ok(file) => {
 			let reader = BufReader::new(file);
@@ -51,7 +47,7 @@ pub fn read_users() -> Vec<types::User> {
 }
 
 /// Insert or update user depending on if it exists or not
-pub fn upsert_user(vec: &mut Vec<types::User>, new_user: types::User) {
+pub fn upsert_user(vec: &mut Vec<User>, new_user: User) {
 	if let Some(existing) = vec.iter_mut().find(|u| u.name == new_user.name) {
 		*existing = new_user;
 	} else {
